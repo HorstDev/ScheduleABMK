@@ -11,7 +11,7 @@ namespace ScheduleABMK.Data.Repositories.Implementations
 {
     public class TeacherRepository : ITeacherRepository
     {
-        private ScheduleDataContext _context;
+        private readonly ScheduleDataContext _context;
 
         public TeacherRepository(ScheduleDataContext context)
         {

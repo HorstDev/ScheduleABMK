@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ScheduleABMK.Data;
@@ -11,9 +12,11 @@ using ScheduleABMK.Data;
 namespace ScheduleABMK.Data.Migrations
 {
     [DbContext(typeof(ScheduleDataContext))]
-    partial class ScheduleDataContextModelSnapshot : ModelSnapshot
+    [Migration("20231129184006_UsersAndRoles")]
+    partial class UsersAndRoles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

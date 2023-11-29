@@ -14,8 +14,24 @@ namespace ScheduleABMK.Data
         {
         }
 
+        private Role[] AllRoles()
+        {
+            const string studentRoleName = "Student";
+            const string teacherRoleName = "Teacher";
+            const string adminRoleName = "Admin";
+
+            var studentRole = new Role { Id = Guid.NewGuid(), Name = studentRoleName };
+            var teacherRole = new Role { Id = Guid.NewGuid(), Name = teacherRoleName };
+            var adminRole = new Role { Id = Guid.NewGuid(), Name = adminRoleName };
+
+            return new Role[] { studentRole, teacherRole, adminRole };
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Role>().HasData(AllRoles());
+
+            modelBuilder.UseSerialColumns();
             base.OnModelCreating(modelBuilder);
         }
 
@@ -24,5 +40,7 @@ namespace ScheduleABMK.Data
         public DbSet<Subject> Subjects { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<Group> Groups { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
     }
 }

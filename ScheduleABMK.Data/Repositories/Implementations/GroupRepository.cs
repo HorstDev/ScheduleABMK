@@ -11,7 +11,7 @@ namespace ScheduleABMK.Data.Repositories.Implementations
 {
     public class GroupRepository : IGroupRepository
     {
-        private ScheduleDataContext _context;
+        private readonly ScheduleDataContext _context;
 
         public GroupRepository(ScheduleDataContext context)
         {

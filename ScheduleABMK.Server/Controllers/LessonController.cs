@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ScheduleABMK.Application.Common.Interfaces;
 using ScheduleABMK.Application.Parsers;
@@ -21,7 +22,7 @@ namespace ScheduleABMK.Server.Controllers
             _lessonService = lessonService;
         }
 
-        [HttpPost("upload-files")]
+        [HttpPost("upload-files"), Authorize(Roles = "Admin")]
         public async Task<ActionResult> UploadFiles()
         {
             try
