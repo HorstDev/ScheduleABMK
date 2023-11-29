@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ScheduleABMK.Domain\ScheduleABMK.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
