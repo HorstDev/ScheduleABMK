@@ -1,0 +1,6 @@
+@ScheduleABMK.Server_HostAddress = http://localhost:5090
+
+GET {{ScheduleABMK.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
