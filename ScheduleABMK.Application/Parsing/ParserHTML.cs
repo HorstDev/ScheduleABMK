@@ -7,6 +7,8 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
+// ВНИМАНИЕ ЧИТАЮЩЕМУ! КОД ГОВНО!!!
+// МНЕ ЛЕНЬ ДЕЛАТЬ РЕФАКТОРИНГ, Я ХОЧУ СПАТЬ. СПАСИБО ЗА ПОНИМАНИЕ!!!!!!!!!!!!!!!
 namespace ScheduleABMK.Application.Parsers
 {
     public class Time
@@ -17,8 +19,6 @@ namespace ScheduleABMK.Application.Parsers
 
     public class ParserHTML : IParser
     {
-        public static int LineWithGroupName = 10;
-
         // Массив с названиями месяцев в родительном падеже
         public static string[] monthNamesGenitive = new string[] {
             "января", "февраля", "марта", "апреля", "мая", "июня",
@@ -38,7 +38,7 @@ namespace ScheduleABMK.Application.Parsers
                 var line = reader.ReadLine();
                 currentLine++;
 
-                if (currentLine == LineWithGroupName)
+                if (currentLine == 10)
                     groupName = GetGroupName(line);
                 else if (currentLine >= 36 && currentLine <= 46 && currentLine % 2 == 0)
                     times.Add(GetTimeStartAndEnd(line));
