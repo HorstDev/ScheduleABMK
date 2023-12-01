@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ScheduleABMK.Application.Common.Interfaces;
-using ScheduleABMK.Application.Response;
 using ScheduleABMK.Data;
 using ScheduleABMK.Domain;
 using ScheduleABMK.Server.Services.Interfaces;
@@ -18,24 +17,25 @@ namespace ScheduleABMK.Server.Services.Implementations
             _parser = parser;
         }
 
-        public async Task<IResponse> UploadLessonsFromFilesAsync(IFormFileCollection files)
+        public async Task UploadLessonsFromFilesAsync(IFormFileCollection files)
         {
-            var response = new OperationResult();
             try
             {
-                foreach (var file in files)
-                    await ProcessFileAsync(file);
+                if (files.Count < 1)
+                {
+                    throw new BadHttpRequestException("Файлы не были загружены");
+                }
 
-                response.IsSuccess = true;
-                response.Message = "Файлы успешно обработаны!";
+                foreach (var file in files)
+                {
+                    await ProcessFileAsync(file);
+                }
             }
             catch (Exception ex)
             {
-                response.IsSuccess = false;
-                response.Message = $"[{nameof(UploadLessonsFromFilesAsync)}]: {ex.Message}";
+                // тут можно реализовать логгирование
+                throw; // перебрасываем исключение для того, чтобы его поймал middleware
             }
-
-            return response;
         }
 
         public async Task ProcessFileAsync(IFormFile file)

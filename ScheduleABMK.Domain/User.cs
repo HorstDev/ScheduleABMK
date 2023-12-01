@@ -18,5 +18,10 @@ namespace ScheduleABMK.Domain
 
         public Guid? RoleId { get; set; }
         public Role? Role { get; set; }
+
+        public bool TokenExpired()
+        {
+            return TokenExpires < DateTime.Now;
+        }
     }
 }

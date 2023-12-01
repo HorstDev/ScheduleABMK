@@ -3,11 +3,13 @@ using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using ScheduleABMK.Application.Auth;
 using ScheduleABMK.Application.Common.Interfaces;
 using ScheduleABMK.Application.Parsers;
 using ScheduleABMK.Data;
 using ScheduleABMK.Data.Repositories.Implementations;
 using ScheduleABMK.Data.Repositories.Interfaces;
+using ScheduleABMK.Server.Middleware;
 using ScheduleABMK.Server.Services.Implementations;
 using ScheduleABMK.Server.Services.Interfaces;
 using Swashbuckle.AspNetCore.Filters;
@@ -27,6 +29,7 @@ AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 builder.Services.AddScoped<IParser, ParserHTML>();
 // Сервисы
 builder.Services.AddScoped<ILessonService, LessonService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 // Репозитории
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
@@ -35,9 +38,7 @@ builder.Services.AddScoped<ISubjectRepository, SubjectRepository>();
 builder.Services.AddScoped<ITeacherRepository, TeacherRepository>();
 builder.Services.AddScoped<IGroupRepository, GroupRepository>();
 builder.Services.AddScoped<IClassroomRepository, ClassroomRepository>();
-// Прочее
-builder.Services.AddHttpContextAccessor();
-builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+builder.Services.AddScoped<PasswordHasher>();
 
 // Ignore cycles
 builder.Services.AddControllers().AddJsonOptions(options =>
@@ -99,6 +100,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+// Middleware для обработки кастомных исключений
+app.UseCustomExceptionHandler();
 
 app.UseHttpsRedirection();
 

@@ -13,33 +13,19 @@ namespace ScheduleABMK.Server.Controllers
     [ApiController]
     public class LessonController : ControllerBase
     {
-        private IHttpContextAccessor _httpContextAccessor;
         private ILessonService _lessonService;
 
-        public LessonController(IHttpContextAccessor httpContextAccessor, ILessonService lessonService)
+        public LessonController(ILessonService lessonService)
         {
-            _httpContextAccessor = httpContextAccessor;
             _lessonService = lessonService;
         }
 
         [HttpPost("upload-files"), Authorize(Roles = "Admin")]
-        public async Task<ActionResult> UploadFiles()
+        public async Task<ActionResult> UploadFiles(IFormFileCollection files)
         {
-            try
-            {
-                var files = _httpContextAccessor.HttpContext.Request.Form.Files;
+            await _lessonService.UploadLessonsFromFilesAsync(files);
 
-                if (files.Count < 1)
-                    return BadRequest("Файлы не загружены");
-
-                var response = await _lessonService.UploadLessonsFromFilesAsync(files);
-
-                return Ok(response.Message);
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, e);
-            }
+            return Ok("Файлы успешно загружены!");
         }
     }
 }

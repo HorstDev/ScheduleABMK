@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace ScheduleABMK.Application.Common.Interfaces
 {
-    public interface IResponse
+    public interface IToken
     {
-        bool IsSuccess { get; set; }
-        string? Message { get; set; }
+        string Token { get; set; }
     }
 }
